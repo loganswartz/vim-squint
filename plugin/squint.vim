@@ -3,19 +3,19 @@ if exists('g:vim_squint_loaded')
 endif
 let g:vim_squint_loaded = 1
 
-function! Squint(pattern, ...)
+function! SquintRegex(pattern, ...)
 	let l:id_specified = a:0 > 0
-	let l:syn_group_specified = a:0 > 1
+	let l:hi_group_specified = a:0 > 1
 	let l:identifier = l:id_specified ? a:1 : 'default'
 	let l:qualified = 'vimSquint' . '_' . l:identifier
 	call Unsquint(l:identifier)
 	
 	execute "syntax match " . l:qualified . " /" . a:pattern . "/"
-	execute "highlight link " . l:qualified . " " . (l:syn_group_specified ? a:2 : "Comment")
+	execute "highlight link " . l:qualified . " " . (l:hi_group_specified ? a:2 : "Comment")
 endfunction
 
-function! Squints(text, ...)
-	call call("Squint", ["^.\\{-}" . a:text . ".\\{-}$"] + a:000)
+function! Squint(text, ...)
+	call call("SquintRegex", ["^.\\{-}" . a:text . ".\\{-}$"] + a:000)
 endfunction
 
 function! Unsquint(...)
@@ -44,7 +44,7 @@ function! s:SquintlistAutocomplete(ArgLead, CmdLine, CursorPos)
 endfunction
 
 command! -nargs=+ Squint call Squint(<f-args>)
-command! -nargs=+ Squints call Squints(<f-args>)
+command! -nargs=+ SquintRegex call SquintRegex(<f-args>)
 command! -complete=customlist,SquintlistAutocomplete -nargs=? Unsquint call Unsquint(<f-args>)
 command! UnsquintAll call UnsquintAll()
 command! Squintlist echo Squintlist(<f-args>)
