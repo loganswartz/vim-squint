@@ -34,10 +34,13 @@ There are several commands that this plugin makes available:
 " specified in this or other commands, the group name used is 'default'.
 
 :Squint <regex> [<group name> [<squint group name>]]
-" A more convenient form of SquintRegex. This embeds the provided regex into
-" another that will make it match the whole line, so you don't have to make
-" your regexes match the whole line yourself. All other behavior is identical
-" to SquintRegex.
+" A more convenient form of SquintRegex. This embeds the provided
+" regex into another that will make it match every line that does
+" not match the regex. All other behavior is identical to SquintRegex.
+" Effectively, this makes it so that only things matching your regex stand out.
+
+:ISquint <regex> [<group name> [<squint group name>]]
+" Same as :Squint, but hide all lines that have a match to the regex in them.
 
 :Unsquint [<group name>]
 " Remove a squint group. If a group is not specified, it uses the default group.
